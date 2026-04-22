@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alvin Planner Pro | USM Edition</title>
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="theme-color" content="#3730a3">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="light-mode">
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="profile-row">
+                <img src="alvin.PNG" alt="Foto Profil Alvin" class="avatar-fun">
+                <div class="profile-text">
+                    <h4>Alvinvr_</h4>
+                    <small><i class='bx bx-laptop'></i> Teknik Informatika</small>
+                </div>
+                <button id="themeToggle" class="theme-btn">
+                    <i class='bx bx-moon' id="themeIcon"></i>
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="mini-stat">
+                    <span class="lbl"><i class='bx bx-party'></i> LVL</span>
+                    <span class="val" id="userLevel">1</span>
+                </div>
+                <div class="mini-stat">
+                    <span class="lbl"><i class='bx bx-check-double'></i> DONE</span>
+                    <span class="val" id="doneCount">0</span>
+                </div>
+                <div class="mini-stat">
+                    <span class="lbl"><i class='bx bx-rocket'></i> PROG</span>
+                    <span class="val" id="progressPercent">0%</span>
+                </div>
+            </div>
+
+            <div class="progress-aero">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header-area">
+                <h2 id="liveTime">00:00</h2>
+                <p id="liveDate">Selasa, 21 April 2026</p>
+            </header>
+
+            <section class="input-area">
+                <div class="input-card-pop">
+                    <div class="input-wrapper">
+                        <i class='bx bx-pencil input-icon'></i>
+                        <input type="text" id="taskInput" placeholder="Ketik tugas baru di sini..." autocomplete="off">
+                    </div>
+                    <div class="input-actions-bar">
+                        <div class="select-wrapper">
+                            <i class='bx bx-bolt-circle' id="priorityIndicator"></i>
+                            <select id="priorityInput">
+                                <option value="high">Penting 🔥</option>
+                                <option value="medium" selected>Normal ⚡</option>
+                                <option value="low">Santai ☁️</option>
+                            </select>
+                        </div>
+                        <button onclick="addTask()" class="btn-add-pop" id="btnAdd">
+                            <i class='bx bx-plus-circle bx-sm'></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="task-list-area">
+                <div class="list-header">
+                    <h3>Daftar Tugas</h3>
+                    <span id="taskCount">0 Total <i class='bx bx-spreadsheet'></i></span>
+                </div>
+                <div class="scroll-wrapper">
+                    <ul id="taskList"></ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc } 
+  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // PASTE KONFIGURASI KAMU DI SINI
+  const firebaseConfig = {
+  apiKey: "AIzaSyC9MRe24RqC-Id0QUeBGc6YOxizbgpLJ2g",
+  authDomain: "planning-harian.firebaseapp.com",
+  projectId: "planning-harian",
+  storageBucket: "planning-harian.firebasestorage.app",
+  messagingSenderId: "186169788105",
+  appId: "1:186169788105:web:569cf7610cea016a11af18",
+  measurementId: "G-FP2KVD5VNZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Ekspos ke window agar bisa diakses di script.js
+  window.db = db;
+  window.dbTools = { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc };
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+  
+    <script src="script.js"></script>
+</body>
+</html>
